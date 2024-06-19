@@ -1,0 +1,66 @@
+<app-navbar></app-navbar>
+<main class="container mt-5">
+    <h1 class="titulo-pagina">Formulario de Registro</h1>
+    <br>
+    <br>
+    <form id="registrationForm">
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="mb-3">
+                    <label for="nombreCompleto" class="form-label">Nombre Completo*:</label>
+                    <input type="text" class="form-control" id="nombreCompleto" aria-describedby="nombreCompletoHelp" required>
+                    <div id="nombreCompletoHelp" class="form-text">Este campo es obligatorio</div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="mb-3">
+                    <label for="nombreUsuario" class="form-label">Nombre de Usuario*:</label>
+                    <input type="text" class="form-control" id="nombreUsuario" aria-describedby="nombreUsuarioHelp" required>
+                    <div id="nombreUsuarioHelp" class="form-text">Este campo es obligatorio</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="mb-3">
+                    <label for="correoUsuario" class="form-label">Correo*:</label>
+                    <input type="email" class="form-control" id="correoUsuario" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">Este campo es obligatorio</div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="mb-3">
+                    <label for="fechaNacimientoUsuario" class="form-label">Fecha de Nacimiento*:</label>
+                    <input type="date" class="form-control" id="fechaNacimientoUsuario"  aria-describedby="fechaHelp">
+                    <div id="fechaHelp" class="form-text">Este campo es obligatorio. Debes ser mayor de 13 años.</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="mb-3">
+                    <label for="contrasenaUsuario1" class="form-label">Contraseña*:</label>
+                    <input type="password" class="form-control" id="contrasenaUsuario1" required>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="mb-3">
+                    <label for="contrasenaUsuario2" class="form-label">Validar Contraseña*:</label>
+                    <input type="password" class="form-control" id="contrasenaUsuario2" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <label for="direccionDespacho" class="form-label">Dirección de despacho:</label>
+            <input type="text" class="form-control" id="direccionDespacho">
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary">Registrarse</button>
+                <button type="button" class="btn btn-secondary" onclick="limpiarFormulario()">Limpiar</button>
+            </div>
+
+        </div>
+    </form>
+</main>
+<app-footer></app-footer>
