@@ -1,19 +1,26 @@
 import { Component, OnInit, Inject, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
+import { Usuario } from '../model/usuario';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private router:Router) { }
   listaProductos: any[] = [];
+  listaUsuarios: any[] = [];
+  sesionIniciada: boolean = false;
+  usuariologeado?: Usuario;
+
 
   // Se configura el carrtio de compras en el navbar, ya que el elemnto fue cargado en todas las paginas
   ngOnInit(): void {
@@ -21,12 +28,14 @@ export class NavbarComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       this.inicializarCarrito();
       this.listaProductos = JSON.parse(sessionStorage.getItem('listaProductos') || '[]');
+      this.listaUsuarios = JSON.parse(sessionStorage.getItem('usuarios') || '[]');
       this.instanciarShowHMTL();
+      this.verificarSesionUsuario();
 
 
     }
   }
-
+  // Configuación que permite visualizar el carrio
   private inicializarCarrito(): void {
     //Configuración del btn Para mostrar el carrito de compras
     const btnCart = document.querySelector('.container-cart-icon') as HTMLElement | null;
@@ -39,19 +48,21 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  private instanciarShowHMTL(){
+  //Configuración que permite visualizar los items en el carrito
+  private instanciarShowHMTL() {
     const rowProduct = document.querySelector('.row-product') as HTMLElement | null;
     const valorTotal = document.querySelector('#total-pagar') as HTMLElement | null;
     const contarProductos = document.querySelector('#contador-productos') as HTMLElement | null;
     const cartEmpty = document.querySelector('.cart-empty') as HTMLElement | null;
     const cartTotal = document.querySelector('.cart-total') as HTMLElement | null;
-    if(rowProduct  && valorTotal && contarProductos && cartEmpty && cartTotal){
+    if (rowProduct && valorTotal && contarProductos && cartEmpty && cartTotal) {
       this.showHtml(rowProduct, valorTotal, contarProductos, cartEmpty, cartTotal);
     }
-   
+
 
   }
 
+  //Metodo utilizado para la generación de html en el carrito
   private showHtml(
     rowProduct: HTMLElement,
     valorTotal: HTMLElement,
@@ -100,7 +111,28 @@ export class NavbarComponent implements OnInit {
     contarProductos.innerText = totalProductos.toString();
 
   }
-  
+
+  verificarSesionUsuario(): void {
+    if (this.listaUsuarios) {
+      this.listaUsuarios.forEach((usuario) => {
+        if (usuario.sesionIniciada) {
+          this.sesionIniciada = true;
+          this.usuariologeado = usuario;
+        }
+      });
+    }
+  }
+
+  cerrarSesion():void{
+    if(this.usuariologeado){
+      this.usuariologeado.sesionIniciada = false;
+      sessionStorage.setItem('usuarios', JSON.stringify(this.listaUsuarios));
+      this.sesionIniciada = false;
+      this.usuariologeado = undefined;
+      alert("Sesion Cerrada");
+      this.router.navigate(['inicio']);
+    }
+  }
 }
 function numberWithCommas(x: number): string {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
