@@ -17,7 +17,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class ProductosComponent implements OnInit{
   seccion: string = ''; 
   hola: boolean = true; 
-  listaProductos: any[] = JSON.parse(sessionStorage.getItem('listaProductos') || '[]');
+  listaProductos: any[] = [];
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private route: ActivatedRoute, private elRef: ElementRef) { }
 
   ngOnInit(): void {
@@ -26,6 +26,7 @@ export class ProductosComponent implements OnInit{
     });
 
     if (isPlatformBrowser(this.platformId)) {
+      this.listaProductos = JSON.parse(sessionStorage.getItem('listaProductos') || '[]');
       this.funcionalidadCarrito();
 
     }

@@ -13,7 +13,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class NavbarComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
-  listaProductos: any[] = JSON.parse(sessionStorage.getItem('listaProductos') || '[]');
+  listaProductos: any[] = [];
 
   // Se configura el carrtio de compras en el navbar, ya que el elemnto fue cargado en todas las paginas
   ngOnInit(): void {

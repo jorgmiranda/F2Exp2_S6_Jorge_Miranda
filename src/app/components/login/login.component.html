@@ -3,18 +3,20 @@
         <h1 class="titulo-pagina">Iniciar Sesión</h1>
         <br>
         <br>
-        <form id="login" onsubmit="return validar()">
+        <form [formGroup]="login" (ngSubmit)="iniciarSesion()">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="mb-3">
                         <label for="nombreCompleto" class="form-label">Nombre de usuario:</label>
-                        <input type="text" class="form-control" id="nombreCompleto" required>
+                        <input type="text" class="form-control" id="nombreUsuario" formControlName="nombreUsuario">
+                        <div id="nombreUsuarioHelp" class="form-text" *ngIf="login.get('nombreUsuario')?.hasError('required')">Este campo es obligatorio</div>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <div class="mb-3">
                         <label for="contrasenaUsuario" class="form-label">Contraseña:</label>
-                        <input type="password" class="form-control" id="contrasenaUsuario" required>
+                        <input type="password" class="form-control" id="contrasenaUsuario" formControlName="contrasenaUsuario">
+                        <div id="contrasenaHelp" class="form-text" *ngIf="login.get('contrasenaUsuario')?.hasError('required')">Este campo es obligatorio</div>
                     </div>
                 </div>
             </div>
