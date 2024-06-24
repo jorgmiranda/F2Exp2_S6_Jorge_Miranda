@@ -55,7 +55,8 @@
                             Usuario
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item editarPerfil" href="usuario/editarDatos.html">Editar Perfil</a></li>
+                            <li><a class="dropdown-item menu-usuario" href="#">{{ usuariologeado.nombreUsuario }}</a></li>
+                            <li><a class="dropdown-item editarPerfil" routerLink="/usuario/editarDatos">Editar Perfil</a></li>
                             <li><hr class="dropdown-divider cerrarSesion-sep"></li>
                             <li><a class="dropdown-item cerrarSesion" href="#" (click)="cerrarSesion()">Cerrar Sesión</a></li>
                         </ul>
@@ -97,7 +98,7 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item incioSesion" routerLink="/login">Iniciar Sesión</a></li>
                                 <li><a class="dropdown-item registro" routerLink="/registro">Registrarse</a></li>
-                                <li><a class="dropdown-item recuperarContra" href="usuario/recuperarContrasena.html">Recuperar Contraseña</a></li>
+                                <li><a class="dropdown-item recuperarContra" routerLink="/recuperarContrasena">Recuperar Contraseña</a></li>
                             </ul>
                         </li>
                     </ul>

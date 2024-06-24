@@ -16,7 +16,6 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class ProductosComponent implements OnInit{
   seccion: string = ''; 
-  hola: boolean = true; 
   listaProductos: any[] = [];
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private route: ActivatedRoute, private elRef: ElementRef) { }
 

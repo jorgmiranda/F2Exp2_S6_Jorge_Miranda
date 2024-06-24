@@ -43,15 +43,27 @@ export class LoginComponent {
           }
         });
 
-        if(usuarioLogeado){
-          alert('Sesión iniciada!');
-          sessionStorage.setItem('usuarios', JSON.stringify(this.listaUsuarios));
+        if(nombreUsuario == 'Administrador' && contrasena == '123.pass'){
+          alert('Sesión como administrador!');
+          this.router.navigate(['admin/inicio']);
+        }else{
+          if(usuarioLogeado){
+            alert('Sesión iniciada!');
+            sessionStorage.setItem('usuarios', JSON.stringify(this.listaUsuarios));
+            this.router.navigate(['inicio']);
+          }else{
+            alert("El nombre de usuario o la contraseña es incorrecta");
+          }
+        }
+
+      }else{
+        if(nombreUsuario == 'Administrador' && contrasena == '123.pass'){
+          alert('Sesión como administrador!');
           this.router.navigate(['inicio']);
         }else{
           alert("El nombre de usuario o la contraseña es incorrecta");
         }
-      }else{
-        alert("El nombre de usuario o la contraseña es incorrecta");
+        
       }
 
     }else{

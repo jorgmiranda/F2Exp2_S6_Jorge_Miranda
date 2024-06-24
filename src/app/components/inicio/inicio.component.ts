@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';
 import { NavbarComponent } from '../../navbar/navbar.component';
 import { FooterComponent } from '../../footer/footer.component';
+import { Usuario } from '../../model/usuario';
 
 @Component({
   selector: 'app-inicio',
@@ -14,12 +15,17 @@ import { FooterComponent } from '../../footer/footer.component';
 export class InicioComponent implements OnInit{
 
   listaProductos: any[] = [];
+  listaUsuarios: any[] = [];
   constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
+  usuariologeado?: Usuario;
+  sesionIniciada: boolean = false;
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.listaProductos = JSON.parse(sessionStorage.getItem('listaProductos') || '[]');
+      this.listaUsuarios = JSON.parse(sessionStorage.getItem('usuarios') || '[]');
       this.funcionalidadCarrito();
+      this.verificarUsuario();
 
     }
   }
@@ -98,6 +104,18 @@ export class InicioComponent implements OnInit{
     valorTotal.innerText = `$${numberWithCommas(total)}`;
     contarProductos.innerText = totalProductos.toString();
 
+  }
+
+  private verificarUsuario(){
+    this.listaUsuarios.forEach((usuario) => {
+      if (usuario.sesionIniciada) {
+        this.usuariologeado = usuario;
+        
+        this.sesionIniciada = true;
+
+      }
+    });
+  
   }
 }
 
