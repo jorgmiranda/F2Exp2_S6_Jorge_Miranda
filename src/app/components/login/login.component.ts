@@ -20,7 +20,13 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
+  /**
+   * Formulario de incio de sesión
+   */
   login!: FormGroup;
+  /**
+   * Lista de usuarios obtenidos desde la variable de sesión
+   */
   listaUsuarios: any[] = JSON.parse(sessionStorage.getItem('usuarios') || '[]');
 
   /**

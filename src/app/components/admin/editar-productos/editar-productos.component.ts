@@ -19,8 +19,17 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
   encapsulation: ViewEncapsulation.None
 })
 export class EditarProductosComponent implements OnInit{
+  /**
+   * Variable sección que mostrara los productos según corresponda
+   */
   seccion: string = ''; 
+  /**
+   * instancia de form group
+   */
   productForms: FormGroup[] = [];
+  /**
+   * Instancia vacia de arreglo de productos
+   */
   products: any[] = [];
 
   /**

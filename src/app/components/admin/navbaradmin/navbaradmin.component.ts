@@ -8,8 +8,7 @@ import { Router } from '@angular/router';
  * Componente de encabezado y barra de navegación para la sección de administración
  * 
  * Este componentne muestra el encabezado y barra de navegación para los usuarios administradores.
- */
-/**
+ *
  * @usageNotes
  * 1. Importa este componente en los compoentes relacionados a la vista del administrador
  * 2. Añade el selector ´app-navbaradmin para mostrar el encabezado
@@ -21,6 +20,9 @@ import { Router } from '@angular/router';
   templateUrl: './navbaradmin.component.html',
   styleUrl: './navbaradmin.component.scss'
 })
+/**
+ * Navbar Admin component
+ */
 export class NavbaradminComponent {
 
   /**

@@ -27,9 +27,21 @@ import { Router } from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class NavbarComponent implements OnInit {
+  /**
+   * instancia de arreglo de productos
+   */
   listaProductos: any[] = [];
+  /**
+   * Instancia de arreglo de lista de usuarios
+   */
   listaUsuarios: any[] = [];
+  /**
+   * Flag de sesión iniciada
+   */
   sesionIniciada: boolean = false;
+  /**
+   * Instancia de usuario utilizando la interface Usuario
+   */
   usuariologeado?: Usuario;
   /**
    * @constructor

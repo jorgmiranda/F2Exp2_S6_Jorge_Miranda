@@ -18,7 +18,13 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators  } from '@angul
   styleUrl: './recuperar-contrasena.component.scss'
 })
 export class RecuperarContrasenaComponent {
+  /**
+   * Formulario de recuperación de contraseña
+   */
   recuperarCorreo!: FormGroup;
+  /**
+   * Instancia de arreglo de usuarios
+   */
   listaUsuarios: any[] = [];
 
   /**

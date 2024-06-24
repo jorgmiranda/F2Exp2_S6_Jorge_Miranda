@@ -20,8 +20,17 @@ import { Usuario } from '../../../model/usuario';
 })
 export class EditarPerfilComponent {
 
+  /**
+   * Formulario de actualización de datos del usuario
+   */
   updateForm!: FormGroup;
+  /**
+   * Lista de usuarios almacenados en la variable de sesión
+   */
   listaUsuarios: any[] = JSON.parse(sessionStorage.getItem('usuarios') || '[]');
+  /**
+   * Instancia de usuario logeado usando la interfaz Usuario
+   */
   usuariologeado?: Usuario;
   /**
    * @constructor

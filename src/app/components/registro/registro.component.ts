@@ -18,8 +18,13 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, ValidationErro
   styleUrl: './registro.component.scss'
 })
 export class RegistroComponent {
-  
+  /**
+   * Formulario de registro
+   */
   registrationForm!: FormGroup;
+  /**
+   * Lista de usuarios almancenados en sesión
+   */
   listaUsuarios: any[] = JSON.parse(sessionStorage.getItem('usuarios') || '[]');
 
   /**
@@ -43,7 +48,7 @@ export class RegistroComponent {
       direccionDespacho: ''
     },{
       validators: this.validarContrasenasIguales
-    })
+    });
   }
 
   /**

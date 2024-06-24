@@ -22,7 +22,13 @@ import { isPlatformBrowser } from '@angular/common';
   encapsulation: ViewEncapsulation.None
 })
 export class ProductosComponent implements OnInit {
+  /**
+   * Variable sección para definir que productos se mostraran
+   */
   seccion: string = '';
+  /**
+   * Instancia de lista de productos
+   */
   listaProductos: any[] = [];
   /**
    * @constructor
@@ -122,8 +128,14 @@ export class ProductosComponent implements OnInit {
     }
   }
 
-   /**
-   * Metodo que permite que los productos agregados al carrito se visualicen en el hmtl
+ /**
+   * Metodo utilizado para la generación de html en el carrito basado en la lista de productos almacenada en sesión
+   * 
+   * @param rowProduct - Elemento contenedor de los productos en el carrtio
+   * @param valorTotal - Elemento que muestra el total a pagar
+   * @param contarProductos - Elemento qure muestra la cantidad de productos en el carrito
+   * @param cartEmpty - Elemento que muestra el mensaje de carrito vacio
+   * @param cartTotal - Elemento que muestra el contenedor del valor total del carrito
    */
   private showHtml(
     rowProduct: HTMLElement,

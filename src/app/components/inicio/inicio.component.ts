@@ -21,9 +21,21 @@ import { Usuario } from '../../model/usuario';
 })
 export class InicioComponent implements OnInit{
 
+  /**
+   * instancia de arreglo de productos
+   */
   listaProductos: any[] = [];
+  /**
+   * Instancia de arreglo de usuarios
+   */
   listaUsuarios: any[] = [];
+  /**
+   * Instancia de usuario utilizando la interface Usuario
+   */
   usuariologeado?: Usuario;
+  /**
+   * Flag de usuario logeado
+   */
   sesionIniciada: boolean = false;
   /**
    * @constructor
