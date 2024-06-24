@@ -5,6 +5,12 @@ import { FooterComponent } from '../../../footer/footer.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, ValidationErrors, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Usuario } from '../../../model/usuario';
 
+/**
+ * @description
+ * Componente de formulario de edición de perfil del usuario.
+ * 
+ * Este componente le permite al usuario editar su información con excepción del nombre de usuario.
+ */
 @Component({
   selector: 'app-editar-perfil',
   standalone: true,
@@ -17,13 +23,26 @@ export class EditarPerfilComponent {
   updateForm!: FormGroup;
   listaUsuarios: any[] = JSON.parse(sessionStorage.getItem('usuarios') || '[]');
   usuariologeado?: Usuario;
+  /**
+   * @constructor
+   * @param fb - Servicio de creación de formulario de Angular
+   */
   constructor(private fb: FormBuilder) { }
 
+  /**
+   * Metodo de inicialización del componente.
+   * Obtiene el usuario logeado en el sistema y crea el formulario de edición.
+   */
   ngOnInit(): void {
     this.obtenerUsuario();
     this.inicializarFormulario();
   }
 
+  /**
+   * Configura el formulario de edición.
+   * Recupera la información obtenida del usuario logeado en el campo correspondiente para iniciar la edición.
+   * Ademas se agregan las validaciones de campos requeridos, email y personalizadas
+   */
   inicializarFormulario() {
     if (this.usuariologeado) {
       this.updateForm = this.fb.group({
@@ -40,6 +59,10 @@ export class EditarPerfilComponent {
   }
 
 
+  /**
+   * Metodo encargado de la actualización del usuario.
+   * Actualiza la información del usuario almacenado en sesión y muestra una alerta de JavaScript para notificar si el cambio fue completado.
+   */
   actualizarUsuario(): void {
     if (this.updateForm.valid && this.usuariologeado) {
       const nombreUsuario = this.usuariologeado.nombreUsuario;
@@ -65,6 +88,11 @@ export class EditarPerfilComponent {
   }
 
 
+  /**
+   * Valida que la edad del usuario sea mayor a 13 años
+   * @param control - El control del formulario que contiene la fecha de nacimiento del usuario.
+   * @returns  Un objeto con el error si el usuario es menor de edad, de lo contrario, null.
+   */
   validarEdad(control: { value: string }): { [key: string]: boolean } | null {
     if (control.value) {
       const fechaNacimiento = new Date(control.value);
@@ -76,6 +104,12 @@ export class EditarPerfilComponent {
     return null;
   }
 
+  /**
+   * Calcula la edad de una persona basada en su fecha de nacimiento.
+   * 
+   * @param fechaNacimiento - La fecha de nacimiento del usuario.
+   * @returns La edad del usuario en años.
+   */
   calcularEdad(fechaNacimiento: Date): number {
     const hoy = new Date();
     const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
@@ -86,7 +120,11 @@ export class EditarPerfilComponent {
     return edad;
   }
 
-  //Validar que las contraseñas sean las mismas
+  /**
+   * Valida que las contraseñas ingresadas en dos campos del formulario sean iguales.
+   * @param formGroup - El grupo de formulario que contiene los campos de las contraseñas.
+   * @returns Un objeto con el error si las contraseñas no coinciden, de lo contrario, null.
+   */
   validarContrasenasIguales(formGroup: FormGroup): { [key: string]: any } | null {
     const contrasena1 = formGroup.get('contrasenaUsuario1')?.value;
     const contrasena2 = formGroup.get('contrasenaUsuario2')?.value;
@@ -94,7 +132,11 @@ export class EditarPerfilComponent {
     return contrasena1 === contrasena2 ? null : { contrasenasNoCoinciden: true };
   }
 
-  //Validar que tenga una mayuscula y un numero
+  /**
+   * Valida que una contraseña contenga al menos una letra mayúscula, un número y que tenga una longitud entre 6 y 18 caracteres.
+   * 
+   * @returns Una función validadora que puede ser usada en un control de formulario.
+   */
   validarContrasenaFormato(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (!control.value) {
@@ -108,6 +150,9 @@ export class EditarPerfilComponent {
     };
   }
 
+  /**
+   * Obtiene el usuario logeado en el sistema según la bandera correspondiente.
+   */
   private obtenerUsuario() {
     this.listaUsuarios.forEach((usuario) => {
       if (usuario.sesionIniciada) {

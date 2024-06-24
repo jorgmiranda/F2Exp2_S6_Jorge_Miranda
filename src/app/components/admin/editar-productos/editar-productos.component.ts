@@ -5,6 +5,11 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
+/**
+ * @description
+ * Componente para editar productos en diferentes secciones. Permite inicializar productos según la sección,
+ * gestionar formularios de edición y actualizar la información de los productos.
+ */
 @Component({
   selector: 'app-editar-productos',
   standalone: true,
@@ -18,8 +23,17 @@ export class EditarProductosComponent implements OnInit{
   productForms: FormGroup[] = [];
   products: any[] = [];
 
+  /**
+   * @constructor
+   * @param route - Servicio de enrutamiento de Angular
+   * @param fb - Servicio de creación de formulario de Angular
+   */
   constructor(private route: ActivatedRoute, private fb: FormBuilder) { }
 
+  /**
+   * Metodo de inicialización del componente
+   * Obtiene la sección de la ruta y llama a los métodos para inicializar productos y formularios.
+   */
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.seccion = params.get('seccion') || '';
@@ -30,6 +44,9 @@ export class EditarProductosComponent implements OnInit{
     
   }
 
+  /**
+   * Inicializa la lista de productos basada en la sección actual.
+   */
   inicializarProductos(){
     if (this.seccion === 'cuidado_capilar') {
       this.products = [
@@ -143,6 +160,9 @@ export class EditarProductosComponent implements OnInit{
     }
   }
 
+  /**
+   * Inicializa los formularios para cada producto con los datos actuales.
+   */
   inicializarFormularios(): void{
     this.productForms = [];
     this.products.forEach((product) => {
@@ -154,6 +174,11 @@ export class EditarProductosComponent implements OnInit{
     });
   }
 
+  /**
+   * Maneja el envío de un formulario para actualizar un producto.
+   * @param form - El formulario del producto que se está editando.
+   * @param product - El producto correspondiente al formulario.
+   */
   onSubmit(form: FormGroup, product: any) {
     if (form.valid) {
       const updatedProduct = form.value;
@@ -166,7 +191,12 @@ export class EditarProductosComponent implements OnInit{
     }
   }
   
-
+/**
+ * Formatea un numero con el formato de peso chileno
+ * 
+ * @param x 
+ * @returns 
+ */
   numberWithCommas(x: string): string {
     return x.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }

@@ -5,6 +5,12 @@ import { NavbarComponent } from '../../navbar/navbar.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators  } from '@angular/forms'; 
 import { Router } from '@angular/router';
 
+/**
+ * @description
+ * Componente login
+ * 
+ * Componente encargado de la vista de inicio de sesión de la aplicación
+ */
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -17,8 +23,17 @@ export class LoginComponent {
   login!: FormGroup;
   listaUsuarios: any[] = JSON.parse(sessionStorage.getItem('usuarios') || '[]');
 
+  /**
+   * @constructor
+   * @param fb - Servicio de creación de formulario de Angular
+   * @param router  - Servicio de enrutamiento de Angular
+   */
   constructor (private fb: FormBuilder, private router:Router) {}
 
+  /**
+   * Metodo de inicialización del componente
+   * Inicializa el formulario de login con sus validaciones correspondiente
+   */
   ngOnInit(): void{
     this.login = this.fb.group({
       nombreUsuario: ['', Validators.required],
@@ -27,6 +42,13 @@ export class LoginComponent {
   
   }
 
+  /**
+   * Permite iniciar sesión en la aplicación
+   * Verifica si el nombre de usuario y la constraseña corresponde a uno de los valores registrados en la
+   * variable de sesión.
+   * 
+   * Adicionalmente en este caso, se dejo por defecto las credenciales de administración
+   */
   iniciarSesion(){
     if(this.login.valid){
       const nombreUsuario = this.login.get('nombreUsuario')!.value;

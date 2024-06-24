@@ -71,14 +71,14 @@ describe('RegistroComponent', () => {
     expect(control?.errors?.['required']).toBeTruthy();
   });
   
-  it('Deberia retornar null por fecha validad', () => {
+  it('Deberia retornar null por fecha valida', () => {
     const date = new Date();
     date.setFullYear(date.getFullYear() - 20); // Usuario de 20 años
     const result = component.validarEdad({ value: date.toISOString() });
     expect(result).toBeNull();
   });
 
-  it('deberia retornar { menorDeEdad: true } por fecha invalidad', () => {
+  it('deberia retornar { menorDeEdad: true } por fecha invalida', () => {
     const date = new Date();
     date.setFullYear(date.getFullYear() - 10); // Usuario de 10 años
     const result = component.validarEdad({ value: date.toISOString() });

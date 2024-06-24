@@ -4,6 +4,12 @@ import { NavbarComponent } from '../../navbar/navbar.component';
 import { FooterComponent } from '../../footer/footer.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, ValidationErrors, ValidatorFn, AbstractControl  } from '@angular/forms'; 
 
+/**
+ * @description
+ * Componente de formulario de registro para un nuevo Usuario
+ * 
+ * Este componente le permite a los nuevos usuarios registrarse en el sistema
+ */
 @Component({
   selector: 'app-registro',
   standalone: true,
@@ -16,8 +22,16 @@ export class RegistroComponent {
   registrationForm!: FormGroup;
   listaUsuarios: any[] = JSON.parse(sessionStorage.getItem('usuarios') || '[]');
 
+  /**
+   * @constructor
+   * @param fb - Servicio de creación de formulario de Angular
+   */
   constructor (private fb: FormBuilder) {}
 
+  /**
+   * Metodo de inicialización del componente.
+   * Inicializa el formulario de registro con sus validadores correspondientes.
+   */
   ngOnInit(): void{
     this.registrationForm = this.fb.group({
       nombreCompleto: ['', Validators.required],
@@ -32,6 +46,10 @@ export class RegistroComponent {
     })
   }
 
+  /**
+   * Registra el usuario en el sistema
+   * Guarda la información del usuario en una variable de sesión, la cual es capaz de soportar multiples usuarios.
+   */
   registrarUsuario(): void {
     if(this.registrationForm.valid){
       // Se Obtienen los usuarios registrados o inicia un arreglo vacio
@@ -62,6 +80,11 @@ export class RegistroComponent {
    
   }
 
+  /**
+   * Valida que la edad del usuario sea mayor a 13 años
+   * @param control - El control del formulario que contiene la fecha de nacimiento del usuario.
+   * @returns  Un objeto con el error si el usuario es menor de edad, de lo contrario, null.
+   */
   validarEdad(control: { value: string }): { [key: string]: boolean } | null {
     if (control.value) {
       const fechaNacimiento = new Date(control.value);
@@ -73,6 +96,12 @@ export class RegistroComponent {
     return null;
   }
   
+  /**
+   * Calcula la edad de una persona basada en su fecha de nacimiento.
+   * 
+   * @param fechaNacimiento - La fecha de nacimiento del usuario.
+   * @returns La edad del usuario en años.
+   */
   calcularEdad(fechaNacimiento: Date): number {
     const hoy = new Date();
     const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
@@ -83,7 +112,11 @@ export class RegistroComponent {
     return edad;
   }
 
-  //Validar que las contraseñas sean las mismas
+   /**
+   * Valida que las contraseñas ingresadas en dos campos del formulario sean iguales.
+   * @param formGroup - El grupo de formulario que contiene los campos de las contraseñas.
+   * @returns Un objeto con el error si las contraseñas no coinciden, de lo contrario, null.
+   */
   validarContrasenasIguales(formGroup: FormGroup): { [key: string]: any } | null {
     const contrasena1 = formGroup.get('contrasenaUsuario1')?.value;
     const contrasena2 = formGroup.get('contrasenaUsuario2')?.value;
@@ -91,7 +124,11 @@ export class RegistroComponent {
     return contrasena1 === contrasena2 ? null : { contrasenasNoCoinciden: true };
   }
 
-  //Validar que tenga una mayuscula y un numero
+  /**
+   * Valida que una contraseña contenga al menos una letra mayúscula, un número y que tenga una longitud entre 6 y 18 caracteres.
+   * 
+   * @returns Una función validadora que puede ser usada en un control de formulario.
+   */
   validarContrasenaFormato(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (!control.value) {
@@ -105,6 +142,10 @@ export class RegistroComponent {
     };
   }
 
+  /**
+   * Limpia los campos de formulario
+   * Metodo que borra la información que esta presente en el formulario de registro
+   */
   limpiarFormulario(): void {
     this.registrationForm.reset();
    

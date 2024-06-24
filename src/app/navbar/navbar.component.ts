@@ -5,6 +5,19 @@ import { Usuario } from '../model/usuario';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
+/**
+ * @description
+ * Componente de encabezado, barra de navegación y inicialización de carrito de compras
+ * 
+ * Este componentne muestra el encabezado, barra de navegación y el carrito de compras para los usuarios consumidores.
+ * Este habilita el uso del carrito de compras en multiples paginas y controla la barra de navegación para que cambie si el usuario
+ * inicio sesión en el sistema.
+ */
+/**
+ * @usageNotes
+ * 1. Importa este componente en los compoentes relacionados a la vista del usuario
+ * 2. Añade el selector ´app-navbar´ para mostrar el encabezado
+ */
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -14,15 +27,22 @@ import { Router } from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class NavbarComponent implements OnInit {
-
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private router:Router) { }
   listaProductos: any[] = [];
   listaUsuarios: any[] = [];
   sesionIniciada: boolean = false;
   usuariologeado?: Usuario;
+  /**
+   * @constructor
+   * @param platformId - Identificado de la plataforma (Navegador o Servidor)
+   * @param router - Servicio de enrutamiento de Angular
+   */
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private router:Router) { }
 
 
-  // Se configura el carrtio de compras en el navbar, ya que el elemnto fue cargado en todas las paginas
+  /**
+   * Metodo de inicialización del componente
+   * Configura el carrito de compras en la barra de navegación y verifica la sesión del usuario
+   */
   ngOnInit(): void {
     // Permite determinar que el codigo se ejecute en el navegador
     if (isPlatformBrowser(this.platformId)) {
@@ -35,7 +55,11 @@ export class NavbarComponent implements OnInit {
 
     }
   }
-  // Configuación que permite visualizar el carrio
+  
+  /**
+   * Configura la visualización del carrito de compras en el navbar
+   * Muestra y oculta el carrito al hacer click en el boton correspondiente.
+   */
   private inicializarCarrito(): void {
     //Configuración del btn Para mostrar el carrito de compras
     const btnCart = document.querySelector('.container-cart-icon') as HTMLElement | null;
@@ -48,7 +72,9 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  //Configuración que permite visualizar los items en el carrito
+  /**
+   * Configuración que permite visualizar los items en el carrito
+   */
   private instanciarShowHMTL() {
     const rowProduct = document.querySelector('.row-product') as HTMLElement | null;
     const valorTotal = document.querySelector('#total-pagar') as HTMLElement | null;
@@ -62,7 +88,15 @@ export class NavbarComponent implements OnInit {
 
   }
 
-  //Metodo utilizado para la generación de html en el carrito
+  /**
+   * Metodo utilizado para la generación de html en el carrito basado en la lista de productos almacenada en sesión
+   * 
+   * @param rowProduct - Elemento contenedor de los productos en el carrtio
+   * @param valorTotal - Elemento que muestra el total a pagar
+   * @param contarProductos - Elemento qure muestra la cantidad de productos en el carrito
+   * @param cartEmpty - Elemento que muestra el mensaje de carrito vacio
+   * @param cartTotal - Elemento que muestra el contenedor del valor total del carrito
+   */
   private showHtml(
     rowProduct: HTMLElement,
     valorTotal: HTMLElement,
@@ -112,6 +146,10 @@ export class NavbarComponent implements OnInit {
 
   }
 
+
+  /**
+   * Verifica si  algún usuario tiene la sesión iniciada
+   */
   verificarSesionUsuario(): void {
     if (this.listaUsuarios) {
       this.listaUsuarios.forEach((usuario) => {
@@ -123,6 +161,9 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  /**
+   * Cierra la sesión del usuario logeado
+   */
   cerrarSesion():void{
     if(this.usuariologeado){
       this.usuariologeado.sesionIniciada = false;
@@ -134,6 +175,12 @@ export class NavbarComponent implements OnInit {
     }
   }
 }
+/**
+ * Formatea un numero con el formato de peso chileno
+ * 
+ * @param x 
+ * @returns 
+ */
 function numberWithCommas(x: number): string {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }

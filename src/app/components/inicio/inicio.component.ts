@@ -5,6 +5,13 @@ import { NavbarComponent } from '../../navbar/navbar.component';
 import { FooterComponent } from '../../footer/footer.component';
 import { Usuario } from '../../model/usuario';
 
+/**
+ * @description
+ * Componente inicio
+ * 
+ * Es la primera pagina de sistema y todavia se encuentra en construcción, para esta demo 
+ * se muestra el nombre de usuario logeado
+ */
 @Component({
   selector: 'app-inicio',
   standalone: true,
@@ -16,10 +23,20 @@ export class InicioComponent implements OnInit{
 
   listaProductos: any[] = [];
   listaUsuarios: any[] = [];
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
   usuariologeado?: Usuario;
   sesionIniciada: boolean = false;
+  /**
+   * @constructor
+   * @param platformId - Identificado de la plataforma (Navegador o Servidor)
+   */
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
 
+  /**
+   * Metodo de inicialización del componente
+   * Se inicializan las lista de productos/usuarios guardados en sesión.
+   * Inicializa la funcionalidad del carrito permitiendo su uso en esta pagina.
+   * Verifica si el usuario esta logeado en el sistema
+   */
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.listaProductos = JSON.parse(sessionStorage.getItem('listaProductos') || '[]');
@@ -29,7 +46,9 @@ export class InicioComponent implements OnInit{
 
     }
   }
-  /// Funcionalidad de eliminar items del carrito en esta pagina
+  /**
+   * Funcionalidad de eliminar items del carrito en esta pagina
+   */
   private funcionalidadCarrito(): void {
     const cartInfo = document.querySelector('.cart-product') as HTMLElement | null;
     const rowProduct = document.querySelector('.row-product') as HTMLElement | null;
@@ -57,6 +76,15 @@ export class InicioComponent implements OnInit{
     }
   }
 
+  /**
+   * Metodo utilizado para la generación de html en el carrito basado en la lista de productos almacenada en sesión
+   * 
+   * @param rowProduct - Elemento contenedor de los productos en el carrtio
+   * @param valorTotal - Elemento que muestra el total a pagar
+   * @param contarProductos - Elemento qure muestra la cantidad de productos en el carrito
+   * @param cartEmpty - Elemento que muestra el mensaje de carrito vacio
+   * @param cartTotal - Elemento que muestra el contenedor del valor total del carrito
+   */
   private showHtml(
     rowProduct: HTMLElement,
     valorTotal: HTMLElement,
@@ -106,6 +134,9 @@ export class InicioComponent implements OnInit{
 
   }
 
+  /**
+   * Verifica si el usuario esta logeado en el sistema
+   */
   private verificarUsuario(){
     this.listaUsuarios.forEach((usuario) => {
       if (usuario.sesionIniciada) {
@@ -119,6 +150,11 @@ export class InicioComponent implements OnInit{
   }
 }
 
+/**
+ * Formatea un numero con el formato de peso chileno
+ * @param x 
+ * @returns 
+ */
 function numberWithCommas(x: number): string {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }

@@ -4,6 +4,12 @@ import { FooterComponent } from '../../footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators  } from '@angular/forms'; 
 
+/**
+ * @description
+ * Componente Recuperción de contraseña
+ * 
+ * Este componente le permite ingresar el correo al usuario, y si este esta registrado obtiene la contraseña
+ */
 @Component({
   selector: 'app-recuperar-contrasena',
   standalone: true,
@@ -15,8 +21,16 @@ export class RecuperarContrasenaComponent {
   recuperarCorreo!: FormGroup;
   listaUsuarios: any[] = [];
 
+  /**
+   * @constructor
+   * @param fb - Servicio de creación de formulario de Angular
+   */
   constructor (private fb: FormBuilder) {}
 
+  /**
+   * Metodo de inicialización del componente.
+   * Inicializa el formulario de recpuerar contraseña y obtiene el listado de usuarios registrados en el sesión storage
+   */
   ngOnInit(): void{
     this.recuperarCorreo = this.fb.group({
       correoValidacion: ['', [Validators.required, Validators.email]]
@@ -24,6 +38,10 @@ export class RecuperarContrasenaComponent {
     this.listaUsuarios = JSON.parse(sessionStorage.getItem('usuarios') || '[]');
   }
 
+  /**
+   * Permite recueprar la contraseña del usuario
+   * Recupera la contraseña del usuario, si el correo esta registrado en la variable de sesión.
+   */
   recuperarContrasena(){
     if(this.recuperarCorreo.valid){
       const correo = this.recuperarCorreo.get('correoValidacion')!.value;

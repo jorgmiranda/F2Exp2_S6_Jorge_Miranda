@@ -1,11 +1,18 @@
-import { Component, OnInit, Inject, PLATFORM_ID, ViewEncapsulation,  HostListener, ElementRef  } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID, ViewEncapsulation, HostListener, ElementRef } from '@angular/core';
 import { FooterComponent } from '../../footer/footer.component';
 import { NavbarComponent } from '../../navbar/navbar.component';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';
 
-
+/**
+ * @description
+ * Componente Productos
+ * 
+ * Este componente es el encargado de cargar los productos disponibles en el sistema dependiendo de la sección ingresada.
+ * 
+ * 
+ */
 @Component({
   selector: 'app-productos',
   standalone: true,
@@ -14,11 +21,21 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrl: './productos.component.scss',
   encapsulation: ViewEncapsulation.None
 })
-export class ProductosComponent implements OnInit{
-  seccion: string = ''; 
+export class ProductosComponent implements OnInit {
+  seccion: string = '';
   listaProductos: any[] = [];
+  /**
+   * @constructor
+   * @param platformId - Identificado de la plataforma (Navegador o Servidor)
+   * @param route - Servicio de enrutamiento de Angular
+   * @param elRef - Referencia al elemento del DOM asociado con este componente.
+   */
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private route: ActivatedRoute, private elRef: ElementRef) { }
 
+  /**
+   * Metodo de inicialización del componente
+   * suscribiéndose a los parámetros de la ruta y configurando la funcionalidad del carrito de compras.
+   */
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.seccion = params.get('seccion') || '';
@@ -32,6 +49,11 @@ export class ProductosComponent implements OnInit{
   }
 
 
+  /**
+   * Maneja los eventos de clic en el documento. Agrega productos al carrito y actualiza la vista del carrito.
+   * 
+   * @param event - El evento de clic del ratón.
+   */
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent) {
     const productList = this.elRef.nativeElement.querySelector('.card-container');
@@ -69,7 +91,10 @@ export class ProductosComponent implements OnInit{
     }
   }
 
-
+  /**
+   * Permite agregar elementos al carrito de compras del sitio web.
+   * Los productos agregos son almacenados en una variable de sesión
+   */
   private funcionalidadCarrito(): void {
     const cartInfo = document.querySelector('.cart-product') as HTMLElement | null;
     const rowProduct = document.querySelector('.row-product') as HTMLElement | null;
@@ -79,7 +104,7 @@ export class ProductosComponent implements OnInit{
     const cartEmpty = document.querySelector('.cart-empty') as HTMLElement | null;
     const cartTotal = document.querySelector('.cart-total') as HTMLElement | null;
 
-    if (rowProduct  && valorTotal && contarProductos && cartEmpty && cartTotal) {
+    if (rowProduct && valorTotal && contarProductos && cartEmpty && cartTotal) {
       rowProduct.addEventListener('click', (e) => {
         if ((e.target as HTMLElement).classList.contains('icon-close')) {
           const producto = (e.target as HTMLElement).parentElement as HTMLElement;
@@ -97,6 +122,9 @@ export class ProductosComponent implements OnInit{
     }
   }
 
+   /**
+   * Metodo que permite que los productos agregados al carrito se visualicen en el hmtl
+   */
   private showHtml(
     rowProduct: HTMLElement,
     valorTotal: HTMLElement,
@@ -147,7 +175,11 @@ export class ProductosComponent implements OnInit{
   }
 
 }
-
+/**
+ * Formatea un numero con el formato de peso chileno
+ * @param x 
+ * @returns 
+ */
 function numberWithCommas(x: number): string {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
