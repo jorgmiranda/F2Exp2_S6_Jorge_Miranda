@@ -1,16 +1,28 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ActivatedRoute } from '@angular/router';
 import { EditarProductosComponent } from './editar-productos.component';
 
 describe('EditarProductosComponent', () => {
   let component: EditarProductosComponent;
   let fixture: ComponentFixture<EditarProductosComponent>;
 
+  // Mock de ActivatedRoute
+  const activatedRouteMock = {
+    snapshot: {
+      paramMap: {
+        get: () => 'registro'
+      }
+    }
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EditarProductosComponent]
+      imports: [EditarProductosComponent],
+      providers: [
+        { provide: ActivatedRoute, useValue: activatedRouteMock }
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(EditarProductosComponent);
     component = fixture.componentInstance;

@@ -1,16 +1,29 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ActivatedRoute } from '@angular/router';
 import { InicioAdminComponent } from './inicio-admin.component';
 
 describe('InicioAdminComponent', () => {
   let component: InicioAdminComponent;
   let fixture: ComponentFixture<InicioAdminComponent>;
 
+  // Mock de ActivatedRoute
+  const activatedRouteMock = {
+    snapshot: {
+      paramMap: {
+        get: () => 'registro'
+      }
+    }
+  };
+
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InicioAdminComponent]
+      imports: [InicioAdminComponent],
+      providers: [
+        { provide: ActivatedRoute, useValue: activatedRouteMock }
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(InicioAdminComponent);
     component = fixture.componentInstance;
